@@ -23,24 +23,24 @@ func HandleEnterKey(cv fyne.Canvas) {
 		case "M":
 			fmt.Println("M 打开地图")
 		case "W":
-			VecRow = -1
-			VecCol = 0
-			Move(VecRow, VecCol)
+			define.VecRow = -1
+			define.VecCol = 0
+			Move(define.VecRow, define.VecCol)
 			//fmt.Println("W 向前移动")
 		case "S":
-			VecRow = 1
-			VecCol = 0
-			Move(VecRow, VecCol)
+			define.VecRow = 1
+			define.VecCol = 0
+			Move(define.VecRow, define.VecCol)
 			//fmt.Println("S 向后移动")
 		case "A":
-			VecRow = 0
-			VecCol = -1
-			Move(VecRow, VecCol)
+			define.VecRow = 0
+			define.VecCol = -1
+			Move(define.VecRow, define.VecCol)
 			//fmt.Println("A 向左移动")
 		case "D":
-			VecRow = 0
-			VecCol = 1
-			Move(VecRow, VecCol)
+			define.VecRow = 0
+			define.VecCol = 1
+			Move(define.VecRow, define.VecCol)
 			//fmt.Println("D 向右移动")
 		case "C":
 			fmt.Println("C 角色界面")
@@ -103,8 +103,8 @@ func HandleEnterKey(cv fyne.Canvas) {
 
 func Move(vecR, vecC int) {
 	// 目的地坐标
-	targetRow := MyRow + vecR
-	targetCol := MyCol + vecC
+	targetRow := define.MyRow + vecR
+	targetCol := define.MyCol + vecC
 	if targetRow < 0 || targetRow >= define.MapRow || targetCol < 0 || targetCol >= define.MapCOL {
 		//	地图边界 todo 现有地图（蒙德璃月稻妻须弥四国）的动态加载 感觉好像很难...
 		music := utils.MusicEntry{
@@ -123,10 +123,10 @@ func Move(vecR, vecC int) {
 		}()
 	} else if define.Map[targetRow][targetCol] == 0 {
 		define.Map[targetRow][targetCol] += 1
-		define.Map[MyRow][MyCol] = 0
+		define.Map[define.MyRow][define.MyCol] = 0
 		// 更新角色位置
-		MyRow += vecR
-		MyCol += vecC
+		define.MyRow += vecR
+		define.MyCol += vecC
 
 		// 刷新文本区域
 		fillText()
@@ -134,10 +134,10 @@ func Move(vecR, vecC int) {
 }
 
 func F3() {
-	wish := MainApp.NewWindow("祈愿")
+	wish := define.MainApp.NewWindow("祈愿")
 	WindowsBaseSize(wish)
 	wish.SetOnClosed(func() {
-		Window.Show()
+		define.Window.Show()
 	})
 
 	crystal := canvas.NewText("剩余原石: 1000", color.Black)
@@ -171,5 +171,5 @@ func F3() {
 	wish.SetContent(contain)
 
 	wish.Show()
-	Window.Hide()
+	define.Window.Hide()
 }
